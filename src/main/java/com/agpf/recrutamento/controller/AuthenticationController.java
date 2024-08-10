@@ -34,7 +34,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
-        var auth = authenticationManager.authenticate(usernamePassword);
+        var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
@@ -47,7 +47,7 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().body("Erro ao cadastrar usuário!");;
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = User.builder().login(data.login()).username(data.username()).password(encryptedPassword).build();
+        User newUser = new User(data.login(), data.username(), encryptedPassword);
         userRepository.save(newUser);
 
         return ResponseEntity.ok(new RegisterResponseDTO(newUser.getLogin(), newUser.getUsername(), newUser.getPassword()));
