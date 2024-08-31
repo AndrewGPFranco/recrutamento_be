@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -50,15 +51,17 @@ public class Vacancy {
     @Length(min = 10, max = 50)
     private String location;
 
-    @NotNull
+    @ElementCollection(targetClass = JobType.class)
+    @CollectionTable(name = "job", joinColumns = @JoinColumn(name = "vacancy_id"))
+    @Enumerated(EnumType.STRING)
     @Column(name = "job")
-    @Enumerated(EnumType.STRING)
-    private JobType jobType;
+    private List<JobType> jobType;
 
-    @NotNull
-    @Column(name = "technology")
+    @ElementCollection(targetClass = TechnologyType.class)
+    @CollectionTable(name = "technology", joinColumns = @JoinColumn(name = "vacancy_id"))
     @Enumerated(EnumType.STRING)
-    private TechnologyType technology;
+    @Column(name = "technology")
+    private List<TechnologyType> technology;
 
     @NotNull
     @Column(name = "level")
@@ -73,10 +76,10 @@ public class Vacancy {
     @Enumerated(EnumType.STRING)
     private StatusType status;
 
-    @NotNull
-    @Column(name = "benefits")
-    @Length(min = 1, max = 500)
-    private String benefits;
+    @ElementCollection
+    @CollectionTable(name = "benefits", joinColumns = @JoinColumn(name = "vacancy_id"))
+    @Column(name = "benefit")
+    private List<String> benefits;
 
     @Column(name = "created_at")
     private LocalDate created_at;
@@ -85,8 +88,8 @@ public class Vacancy {
     private LocalDate updated_at;
 
     public Vacancy(String title, String description, Integer salary, String company, String location,
-                   JobType jobTypes, TechnologyType technology, LevelType levelType,
-                   boolean experience, StatusType status, String benefits, LocalDate localDate, LocalDate localDate1)
+                   List<JobType> jobTypes, List<TechnologyType> technology, LevelType levelType,
+                   boolean experience, StatusType status, List<String> benefits, LocalDate localDate, LocalDate localDate1)
     {
         this.title = title;
         this.description = description;

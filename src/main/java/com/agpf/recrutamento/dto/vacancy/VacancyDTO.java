@@ -6,6 +6,7 @@ import com.agpf.recrutamento.EnumType.StatusType;
 import com.agpf.recrutamento.EnumType.TechnologyType;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record VacancyDTO(
         String title,
@@ -13,12 +14,12 @@ public record VacancyDTO(
         Integer salary,
         String company,
         String location,
-        JobType jobType,
-        TechnologyType technology,
+        List<JobType> jobType,
+        List<TechnologyType> technology,
         LevelType levelType,
         boolean experience,
         StatusType status,
-        String benefits,
+        List<String> benefits,
         LocalDate created_at,
         LocalDate updated_at
 ) {}

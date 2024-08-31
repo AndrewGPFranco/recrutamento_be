@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS benefits (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    vacancy_id BIGINT NOT NULL,
+    benefit VARCHAR(500) NOT NULL,
+    FOREIGN KEY (vacancy_id) REFERENCES vacancies(id) ON DELETE CASCADE
+);
