@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VacancyService {
@@ -36,5 +37,13 @@ public class VacancyService {
             logger.error("Erro ao registrar vaga", e);
             throw new RegisterException(e.getMessage());
         }
+    }
+
+    public void deleteVacancy(Long id) {
+        Optional<Vacancy> vacancyById = vacancyRepository.findById(id);
+        if(vacancyById.isEmpty())
+            throw new RuntimeException("Erro ao encontrar vaga com id " + id + ".");
+        else
+            vacancyRepository.deleteById(id);
     }
 }

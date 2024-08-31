@@ -6,6 +6,7 @@ import com.agpf.recrutamento.model.Vacancy;
 import com.agpf.recrutamento.service.VacancyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,16 @@ public class VacancyController {
             return ResponseEntity.ok().body("Vaga registrada com sucesso.");
         } catch (RegisterException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable Long id) {
+        try {
+            vacancyService.deleteVacancy(id);
+            return ResponseEntity.ok("Vaga excluída com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }
