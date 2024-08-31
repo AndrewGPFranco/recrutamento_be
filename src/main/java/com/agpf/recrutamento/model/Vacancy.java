@@ -7,15 +7,18 @@ import com.agpf.recrutamento.EnumType.TechnologyType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
-@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "vacancies")
+@Entity(name = "vacancies")
 public class Vacancy {
 
     @Id
@@ -49,14 +52,17 @@ public class Vacancy {
 
     @NotNull
     @Column(name = "job")
-    private List<JobType> jobType;
+    @Enumerated(EnumType.STRING)
+    private JobType jobType;
 
     @NotNull
-    @Column(name = "technologies")
-    private List<TechnologyType> technologies;
+    @Column(name = "technology")
+    @Enumerated(EnumType.STRING)
+    private TechnologyType technology;
 
     @NotNull
     @Column(name = "level")
+    @Enumerated(EnumType.STRING)
     private LevelType levelType;
 
     @NotNull
@@ -64,11 +70,13 @@ public class Vacancy {
     private boolean experience;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private StatusType status;
 
     @NotNull
     @Column(name = "benefits")
-    private List<String> benefits;
+    @Length(min = 1, max = 500)
+    private String benefits;
 
     @Column(name = "created_at")
     private LocalDate created_at;
@@ -76,4 +84,22 @@ public class Vacancy {
     @Column(name = "updated_at")
     private LocalDate updated_at;
 
+    public Vacancy(String title, String description, Integer salary, String company, String location,
+                   JobType jobTypes, TechnologyType technology, LevelType levelType,
+                   boolean experience, StatusType status, String benefits, LocalDate localDate, LocalDate localDate1)
+    {
+        this.title = title;
+        this.description = description;
+        this.salary = salary;
+        this.company = company;
+        this.location = location;
+        this.jobType = jobTypes;
+        this.technology = technology;
+        this.levelType = levelType;
+        this.experience = experience;
+        this.status = status;
+        this.benefits = benefits;
+        this.created_at = localDate;
+        this.updated_at = localDate1;
+    }
 }

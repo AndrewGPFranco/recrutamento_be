@@ -2,7 +2,9 @@ package com.agpf.recrutamento.dto.wrapper;
 
 import com.agpf.recrutamento.dto.vacancy.VacancyDTO;
 import com.agpf.recrutamento.model.Vacancy;
+import org.springframework.stereotype.Component;
 
+@Component
 public class WrapperDtoEntity {
 
     public Vacancy vacancyDtoToEntity(VacancyDTO dto) {
@@ -12,7 +14,7 @@ public class WrapperDtoEntity {
                 dto.company(),
                 dto.location(),
                 dto.jobType(),
-                dto.technologies(),
+                dto.technology(),
                 dto.levelType(),
                 dto.experience(),
                 dto.status(),
@@ -29,7 +31,7 @@ public class WrapperDtoEntity {
                 entity.getCompany(),
                 entity.getLocation(),
                 entity.getJobType(),
-                entity.getTechnologies(),
+                entity.getTechnology(),
                 entity.getLevelType(),
                 entity.isExperience(),
                 entity.getStatus(),
