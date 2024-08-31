@@ -1,6 +1,7 @@
 package com.agpf.recrutamento.controller;
 
 import com.agpf.recrutamento.dto.vacancy.VacancyDTO;
+import com.agpf.recrutamento.exception.RegisterException;
 import com.agpf.recrutamento.model.Vacancy;
 import com.agpf.recrutamento.service.VacancyService;
 import jakarta.validation.Valid;
@@ -28,8 +29,8 @@ public class VacancyController {
         try {
             vacancyService.registerVacancy(dto);
             return ResponseEntity.ok().body("Vaga registrada com sucesso.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Falha ao registrar vaga.");
+        } catch (RegisterException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

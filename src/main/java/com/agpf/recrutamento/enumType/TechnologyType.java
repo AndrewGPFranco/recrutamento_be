@@ -1,4 +1,4 @@
-package com.agpf.recrutamento.EnumType;
+package com.agpf.recrutamento.enumType;
 
 public enum TechnologyType {
 

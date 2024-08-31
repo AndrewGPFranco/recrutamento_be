@@ -1,9 +1,9 @@
 package com.agpf.recrutamento.dto.vacancy;
 
-import com.agpf.recrutamento.EnumType.JobType;
-import com.agpf.recrutamento.EnumType.LevelType;
-import com.agpf.recrutamento.EnumType.StatusType;
-import com.agpf.recrutamento.EnumType.TechnologyType;
+import com.agpf.recrutamento.enumType.JobType;
+import com.agpf.recrutamento.enumType.LevelType;
+import com.agpf.recrutamento.enumType.StatusType;
+import com.agpf.recrutamento.enumType.TechnologyType;
 
 import java.time.LocalDate;
 import java.util.List;

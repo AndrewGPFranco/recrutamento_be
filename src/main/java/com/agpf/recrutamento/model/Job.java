@@ -1,6 +1,6 @@
 package com.agpf.recrutamento.model;
 
-import com.agpf.recrutamento.EnumType.JobType;
+import com.agpf.recrutamento.enumType.JobType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

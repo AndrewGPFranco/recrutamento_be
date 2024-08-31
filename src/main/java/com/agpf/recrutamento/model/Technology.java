@@ -1,6 +1,6 @@
 package com.agpf.recrutamento.model;
 
-import com.agpf.recrutamento.EnumType.TechnologyType;
+import com.agpf.recrutamento.enumType.TechnologyType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

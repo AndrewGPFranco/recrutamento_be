@@ -1,9 +1,9 @@
 package com.agpf.recrutamento.model;
 
-import com.agpf.recrutamento.EnumType.JobType;
-import com.agpf.recrutamento.EnumType.LevelType;
-import com.agpf.recrutamento.EnumType.StatusType;
-import com.agpf.recrutamento.EnumType.TechnologyType;
+import com.agpf.recrutamento.enumType.JobType;
+import com.agpf.recrutamento.enumType.LevelType;
+import com.agpf.recrutamento.enumType.StatusType;
+import com.agpf.recrutamento.enumType.TechnologyType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
