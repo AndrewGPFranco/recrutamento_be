@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/vacancy")
@@ -21,14 +22,14 @@ public class VacancyController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Vacancy>> getAllVacancy() {
-        List<Vacancy> allVacancies = vacancyService.getAllVacancies();
+        List<Vacancy> allVacancies = vacancyService.getAll();
         return ResponseEntity.ok().body(allVacancies);
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerVacancy(@Valid @RequestBody VacancyDTO dto) {
         try {
-            vacancyService.registerVacancy(dto);
+            vacancyService.register(dto);
             return ResponseEntity.ok().body("Vaga registrada com sucesso.");
         } catch (RegisterException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -36,10 +37,20 @@ public class VacancyController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteVacancyById(@PathVariable Long id) {
         try {
-            vacancyService.deleteVacancy(id);
+            vacancyService.delete(id);
             return ResponseEntity.ok("Vaga excluída com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<?> getVacancyById(@PathVariable Long id) {
+        try {
+            Optional<Vacancy> vacancyById = vacancyService.getById(id);
+            return ResponseEntity.ok().body(vacancyById);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

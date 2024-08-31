@@ -25,11 +25,11 @@ public class VacancyService {
     @Autowired
     private WrapperDtoEntity wrapperDtoEntity;
 
-    public List<Vacancy> getAllVacancies() {
+    public List<Vacancy> getAll() {
         return vacancyRepository.findAll();
     }
 
-    public void registerVacancy(@Valid VacancyDTO dto) throws RuntimeException {
+    public void register(@Valid VacancyDTO dto) throws RuntimeException {
         try {
             Vacancy vacancy = wrapperDtoEntity.vacancyDtoToEntity(dto);
             vacancyRepository.save(vacancy);
@@ -39,12 +39,12 @@ public class VacancyService {
         }
     }
 
-    public void deleteVacancy(Long id) {
-        Optional<Vacancy> vacancyById = vacancyRepository.findById(id);
-        if(vacancyById.isEmpty()) {
-            logger.error("Erro ao encontrar vaga com o id informado.");
-            throw new RuntimeException("Erro ao encontrar vaga com id " + id + ".");
-        } else
-            vacancyRepository.deleteById(id);
+    public void delete(Long id) {
+        Optional<Vacancy> vacancy = getById(id);
+        vacancyRepository.deleteById(id);
+    }
+
+    public Optional<Vacancy> getById(Long id) {
+        return Optional.ofNullable(vacancyRepository.findById(id).orElseThrow(() -> new RuntimeException("Erro ao encontrar vaga com id " + id + ".")));
     }
 }
