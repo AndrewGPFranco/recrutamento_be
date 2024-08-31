@@ -1,5 +1,9 @@
 package com.agpf.recrutamento.model;
 
+import com.agpf.recrutamento.EnumType.JobType;
+import com.agpf.recrutamento.EnumType.LevelType;
+import com.agpf.recrutamento.EnumType.StatusType;
+import com.agpf.recrutamento.EnumType.TechnologyType;
 import jakarta.persistence.Entity;
 import lombok.Data;
 
