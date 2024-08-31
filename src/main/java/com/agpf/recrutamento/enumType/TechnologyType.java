@@ -2,6 +2,7 @@ package com.agpf.recrutamento.enumType;
 
 public enum TechnologyType {
 
+    ANGULAR,
     C,
     CSHARP,
     GO,
@@ -10,10 +11,12 @@ public enum TechnologyType {
     KOTLIN,
     PHP,
     PYTHON,
+    REACT,
     RUBY,
     RUST,
     SQL,
     SWIFT,
-    TYPESCRIPT
+    TYPESCRIPT,
+    VUE
 
 }
