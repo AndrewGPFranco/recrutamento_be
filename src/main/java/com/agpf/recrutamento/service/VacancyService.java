@@ -41,9 +41,10 @@ public class VacancyService {
 
     public void deleteVacancy(Long id) {
         Optional<Vacancy> vacancyById = vacancyRepository.findById(id);
-        if(vacancyById.isEmpty())
+        if(vacancyById.isEmpty()) {
+            logger.error("Erro ao encontrar vaga com o id informado.");
             throw new RuntimeException("Erro ao encontrar vaga com id " + id + ".");
-        else
+        } else
             vacancyRepository.deleteById(id);
     }
 }
