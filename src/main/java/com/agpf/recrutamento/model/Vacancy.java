@@ -35,7 +35,7 @@ public class Vacancy {
     @Min(1)
     @NotNull
     @Column(name = "salary")
-    private BigDecimal salary;
+    private Integer salary;
 
     @NotNull
     @Column(name = "company")
@@ -66,14 +66,14 @@ public class Vacancy {
     @Column(name = "status")
     private StatusType status;
 
+    @NotNull
+    @Column(name = "benefits")
+    private List<String> benefits;
+
     @Column(name = "created_at")
     private LocalDate created_at;
 
     @Column(name = "updated_at")
     private LocalDate updated_at;
-
-    @NotNull
-    @Column(name = "benefits")
-    private List<String> benefits;
 
 }
