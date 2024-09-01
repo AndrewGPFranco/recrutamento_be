@@ -23,8 +23,8 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         UserDetails userFound = userRepository.findByLogin("gpf");
-        Assertions.assertNotNull(userFound);
-        Assertions.assertEquals("Andrew GPF", userFound.getUsername());
-        Assertions.assertEquals("********", userFound.getPassword());
+        assertNotNull(userFound);
+        assertEquals("Andrew GPF", userFound.getUsername());
+        assertEquals("********", userFound.getPassword());
     }
 }
