@@ -55,4 +55,14 @@ public class VacancyController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateVacancyById(@PathVariable Long id, @Valid @RequestBody VacancyDTO dto) {
+        try {
+            vacancyService.update(id, dto);
+            return ResponseEntity.ok().body("Vaga atualizada com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }
