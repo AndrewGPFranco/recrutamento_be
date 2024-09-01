@@ -1,10 +1,8 @@
-package com.agpf.recrutamento.service;
-
-import org.springframework.stereotype.Component;
+package com.agpf.recrutamento.util;
 
 import java.util.function.Consumer;
 
-public class UtilsService {
+public class Utils {
     protected static <T> void updateField(T fieldValue, Consumer<T> setter) {
         if(fieldValue != null)
             setter.accept(fieldValue);
