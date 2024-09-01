@@ -24,6 +24,8 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(user.getLogin())
+                    .withClaim("username", user.getUsername())
+                    .withClaim("login", user.getLogin())
                     .withExpiresAt(getInstant())
                     .sign(algorithm);
         } catch (JWTCreationException e) {
