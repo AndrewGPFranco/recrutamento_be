@@ -30,8 +30,23 @@ public class HierarchyService {
                         .from(__.V().has("funcionario", "idunico", employee.id()))
                         .to(__.V().has("hierarquia", "level", hierarchyType.getDescription())).iterate();
             }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao adicionar aresta." + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao adicionar aresta.");
+        }
+    }
+
+    public void removeAllEdges(
+            String fromLabelClass, String fromPropertyKey, String fromValueProperty, String labelEdge,
+            String toLabelClass, String toPropertyKey, String toValueProperty
+    ) {
+        GraphTraversalSource g = getGraph();
+
+        try {
+            g.V().has(fromLabelClass, fromPropertyKey, fromValueProperty)
+                    .bothE(labelEdge)
+                    .where(__.V().has(toLabelClass, toPropertyKey, toValueProperty)).drop().iterate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao remover aresta.");
         }
     }
 }
