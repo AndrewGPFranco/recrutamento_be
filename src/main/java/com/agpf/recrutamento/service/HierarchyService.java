@@ -77,16 +77,15 @@ public class HierarchyService {
 
     public void updateHierarchyOfEmployee(String id, String name, String hierarchy) {
         GraphTraversalSource g = getGraph();
-
-        GraphTraversal<Vertex, Vertex> employee = g.V().has("funcionario", label, id)
-                .out("level_funcionario");
+        GraphTraversal<Vertex, Vertex> employee = g.V().has("funcionario", label, id).out("level_funcionario");
 
         if(employee.hasNext()) {
-            Vertex employeeFound = g.V().has("funcionario", label, id).next();
             g.V().has("funcionario", label, id).outE("level_funcionario").drop().iterate();
-            g.addE("level_funcionario")
-                    .from(__.V().has("funcionario", label, employee.id()))
-                    .to(__.V().has("hierarquia", "level", hierarchy)).iterate();
         }
+
+        g.V().has("funcionario", label, id)
+                .addE("level_funcionario")
+                .to(__.V().has("hierarquia", "level", hierarchy))
+                .iterate();
     }
 }
