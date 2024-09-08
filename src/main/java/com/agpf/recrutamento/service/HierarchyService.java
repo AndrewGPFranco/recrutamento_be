@@ -1,12 +1,17 @@
 package com.agpf.recrutamento.service;
 
 import com.agpf.recrutamento.dto.employee.EmployeeDTO;
+import com.agpf.recrutamento.dto.employee.EmployeeHierarchyDTO;
 import com.agpf.recrutamento.enumType.HierarchyType;
 import org.apache.tinkerpop.gremlin.orientdb.OrientGraphFactory;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class HierarchyService {
@@ -48,5 +53,23 @@ public class HierarchyService {
         } catch (Exception e) {
             throw new RuntimeException("Erro ao remover aresta.");
         }
+    }
+
+    public EmployeeHierarchyDTO getHierarchyByEmployee(String id) {
+        GraphTraversalSource g = getGraph();
+        Vertex employeeFound = g.V().has("funcionario", "idunico", id).next();
+        HierarchyType level = null;
+
+        if(employeeFound != null) {
+            GraphTraversal<Vertex, Vertex> response = g.V().has("funcionario", "idunico", id).out("level_funcionario");
+            if(response.hasNext()) {
+                Map<Object, Object> next = g.V().has("funcionario", "idunico", id).out("level_funcionario").elementMap().next();
+                level = HierarchyType.fromDescription(next.get("level").toString());
+            }
+        }
+        String uniqueId = (String) employeeFound.property("idunico").value();
+        String name = (String) employeeFound.property("name").value();
+
+        return new EmployeeHierarchyDTO(null, new EmployeeDTO(uniqueId, name), level != null ? level : HierarchyType.SEM_CARGO);
     }
 }

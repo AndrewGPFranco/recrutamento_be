@@ -32,4 +32,9 @@ public class HierarchyController {
 
         hierarchyService.removeAllEdges(fromLabelClass, fromPropertyKey, fromValueProperty, labelEdge, toLabelClass, toPropertyKey, toValueProperty);
     }
+
+    @GetMapping("/getHierarchyByEmployee/{id}")
+    public EmployeeHierarchyDTO getHierarchyByEmployee(@PathVariable String id) {
+        return hierarchyService.getHierarchyByEmployee(id);
+    }
 }

@@ -7,7 +7,8 @@ public enum HierarchyType {
     PLENO("Pleno"),
     SENIOR("Sênior"),
     TECH_LEAD("Tech Lead"),
-    COORDENADOR("Coordenador");
+    COORDENADOR("Coordenador"),
+    SEM_CARGO("Sem cargo");
 
     private String description;
 
@@ -17,5 +18,15 @@ public enum HierarchyType {
 
     public String getDescription() {
         return description;
+    }
+
+    public static HierarchyType fromDescription(String description) {
+        for (HierarchyType level : HierarchyType.values()) {
+            if (level.getDescription().equalsIgnoreCase(description)) {
+                return level;
+            }
+        }
+
+        return SEM_CARGO;
     }
 }
