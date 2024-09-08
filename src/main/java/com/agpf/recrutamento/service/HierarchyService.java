@@ -19,6 +19,8 @@ public class HierarchyService {
     @Autowired
     private OrientGraphFactory orient;
 
+    private static final String label = "idunico";
+
     public GraphTraversalSource getGraph() {
         return orient.getNoTx().traversal();
     }
@@ -27,12 +29,12 @@ public class HierarchyService {
         GraphTraversalSource g = getGraph();
 
         try {
-            boolean alreadyHave = g.V().has("funcionario", "idunico", employee.id())
+            boolean alreadyHave = g.V().has("funcionario", HierarchyService.label, employee.id())
                     .out("level_funcionario").hasNext();
 
             if(!alreadyHave) {
                 g.addE(label)
-                        .from(__.V().has("funcionario", "idunico", employee.id()))
+                        .from(__.V().has("funcionario", HierarchyService.label, employee.id()))
                         .to(__.V().has("hierarquia", "level", hierarchyType.getDescription())).iterate();
             }
         } catch (Exception e) {
@@ -57,19 +59,34 @@ public class HierarchyService {
 
     public EmployeeHierarchyDTO getHierarchyByEmployee(String id) {
         GraphTraversalSource g = getGraph();
-        Vertex employeeFound = g.V().has("funcionario", "idunico", id).next();
+        Vertex employeeFound = g.V().has("funcionario", label, id).next();
         HierarchyType level = null;
 
         if(employeeFound != null) {
-            GraphTraversal<Vertex, Vertex> response = g.V().has("funcionario", "idunico", id).out("level_funcionario");
+            GraphTraversal<Vertex, Vertex> response = g.V().has("funcionario", label, id).out("level_funcionario");
             if(response.hasNext()) {
-                Map<Object, Object> next = g.V().has("funcionario", "idunico", id).out("level_funcionario").elementMap().next();
+                Map<Object, Object> next = g.V().has("funcionario", label, id).out("level_funcionario").elementMap().next();
                 level = HierarchyType.fromDescription(next.get("level").toString());
             }
         }
-        String uniqueId = (String) employeeFound.property("idunico").value();
+        String uniqueId = (String) employeeFound.property(label).value();
         String name = (String) employeeFound.property("name").value();
 
         return new EmployeeHierarchyDTO(null, new EmployeeDTO(uniqueId, name), level != null ? level : HierarchyType.SEM_CARGO);
+    }
+
+    public void updateHierarchyOfEmployee(String id, String name, String hierarchy) {
+        GraphTraversalSource g = getGraph();
+
+        GraphTraversal<Vertex, Vertex> employee = g.V().has("funcionario", label, id)
+                .out("level_funcionario");
+
+        if(employee.hasNext()) {
+            Vertex employeeFound = g.V().has("funcionario", label, id).next();
+            g.V().has("funcionario", label, id).outE("level_funcionario").drop().iterate();
+            g.addE("level_funcionario")
+                    .from(__.V().has("funcionario", label, employee.id()))
+                    .to(__.V().has("hierarquia", "level", hierarchy)).iterate();
+        }
     }
 }

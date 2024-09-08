@@ -1,6 +1,7 @@
 package com.agpf.recrutamento.controller;
 
 import com.agpf.recrutamento.dto.employee.EmployeeHierarchyDTO;
+import com.agpf.recrutamento.enumType.HierarchyType;
 import com.agpf.recrutamento.service.HierarchyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,10 @@ public class HierarchyController {
     @GetMapping("/getHierarchyByEmployee/{id}")
     public EmployeeHierarchyDTO getHierarchyByEmployee(@PathVariable String id) {
         return hierarchyService.getHierarchyByEmployee(id);
+    }
+
+    @PostMapping("/update/{id}")
+    public void updateHierarchyByEmployee(@PathVariable String id, @RequestBody Map<String, String> body) {
+        hierarchyService.updateHierarchyOfEmployee(id, body.get("name"), body.get("hierarchy"));
     }
 }
