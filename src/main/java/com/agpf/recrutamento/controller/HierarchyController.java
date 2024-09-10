@@ -22,14 +22,8 @@ public class HierarchyController {
     }
 
     @DeleteMapping("/removeEdge")
-    public void removeAllEdges(@RequestBody Map<String, String> body) {
-        String fromLabelClass = body.get("fromLabelClass");
-        String fromPropertyKey = body.get("fromPropertyKey");
-        String fromValueProperty = body.get("fromValueProperty");
-        String labelEdge = body.get("labelEdge");
-        String toLabelClass = body.get("toLabelClass");
-
-        hierarchyService.removeAllEdges(fromLabelClass, fromPropertyKey, fromValueProperty, labelEdge, toLabelClass);
+    public void removeAllEdges(@RequestParam String id) {
+        hierarchyService.removeAllEdges(id);
     }
 
     @GetMapping("/getHierarchyByEmployee/{id}")
