@@ -108,6 +108,32 @@
 			<artifactId>java-jwt</artifactId>
 			<version>4.4.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orientdb-core</artifactId>
+			<version>3.2.30</version>
+		</dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orientdb-graphdb</artifactId>
+			<version>3.2.30</version>
+		</dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orientdb-gremlin</artifactId>
+			<version>3.2.30</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>groovy-jsr223</artifactId>
+					<groupId>org.codehaus.groovy</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.orientechnologies</groupId>
+			<artifactId>orientdb-client</artifactId>
+			<version>3.2.30</version>
+		</dependency>
 	</dependencies>
 
 	<build>
