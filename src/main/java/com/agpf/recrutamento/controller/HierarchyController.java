@@ -21,7 +21,7 @@ public class HierarchyController {
         hierarchyService.addEmployeeEdgeToHierarchy(dto.label(), dto.employeeDTO(), dto.hierarchyType());
     }
 
-    @PostMapping("/removeEdge")
+    @DeleteMapping("/removeEdge")
     public void removeAllEdges(@RequestBody Map<String, String> body) {
         String fromLabelClass = body.get("fromLabelClass");
         String fromPropertyKey = body.get("fromPropertyKey");
@@ -37,7 +37,7 @@ public class HierarchyController {
         return hierarchyService.getHierarchyByEmployee(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public void updateHierarchyByEmployee(@PathVariable String id, @RequestBody Map<String, String> body) {
         hierarchyService.updateHierarchyOfEmployee(id, body.get("name"), body.get("hierarchy"));
     }
