@@ -28,10 +28,8 @@ public class HierarchyController {
         String fromValueProperty = body.get("fromValueProperty");
         String labelEdge = body.get("labelEdge");
         String toLabelClass = body.get("toLabelClass");
-        String toPropertyKey = body.get("toPropertyKey");
-        String toValueProperty = body.get("toValueProperty");
 
-        hierarchyService.removeAllEdges(fromLabelClass, fromPropertyKey, fromValueProperty, labelEdge, toLabelClass, toPropertyKey, toValueProperty);
+        hierarchyService.removeAllEdges(fromLabelClass, fromPropertyKey, fromValueProperty, labelEdge, toLabelClass);
     }
 
     @GetMapping("/getHierarchyByEmployee/{id}")

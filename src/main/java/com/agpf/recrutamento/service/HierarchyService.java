@@ -43,15 +43,15 @@ public class HierarchyService {
     }
 
     public void removeAllEdges(
-            String fromLabelClass, String fromPropertyKey, String fromValueProperty, String labelEdge,
-            String toLabelClass, String toPropertyKey, String toValueProperty
+            String fromLabelClass, String fromPropertyKey, String fromValueProperty,
+            String labelEdge, String toLabelClass
     ) {
         GraphTraversalSource g = getGraph();
 
         try {
             g.V().has(fromLabelClass, fromPropertyKey, fromValueProperty)
                     .bothE(labelEdge)
-                    .where(__.V().has(toLabelClass, toPropertyKey, toValueProperty)).drop().iterate();
+                    .where(__.V().hasLabel(toLabelClass)).drop().iterate();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao remover aresta.");
         }
