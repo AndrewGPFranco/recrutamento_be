@@ -1,7 +1,6 @@
 package com.agpf.recrutamento.controller;
 
 import com.agpf.recrutamento.dto.employee.EmployeeHierarchyDTO;
-import com.agpf.recrutamento.enumType.HierarchyType;
 import com.agpf.recrutamento.service.HierarchyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

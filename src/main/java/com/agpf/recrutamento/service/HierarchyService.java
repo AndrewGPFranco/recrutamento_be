@@ -66,8 +66,8 @@ public class HierarchyService {
                 level = HierarchyType.fromDescription(next.get("level").toString());
             }
         }
-        String uniqueId = (String) employeeFound.property(label).value();
-        String name = (String) employeeFound.property("name").value();
+        String uniqueId = employeeFound != null ? (String) employeeFound.property(label).value() : "";
+        String name = employeeFound != null ? (String) employeeFound.property("name").value() : "";
 
         return new EmployeeHierarchyDTO(null, new EmployeeDTO(uniqueId, name), level != null ? level : HierarchyType.SEM_CARGO);
     }
