@@ -28,8 +28,8 @@ public class UserProfile {
     @Column(name = "user_id", unique = true)
     private Long user_id;
 
-    @Column(name = "surname", unique = true)
-    private String surname;
+    @Column(name = "nickname", unique = true)
+    private String nickname;
 
     @NotNull
     @NotBlank
@@ -43,12 +43,16 @@ public class UserProfile {
     @Column(name = "date_birth")
     private Date dateOfBirth;
 
-    @Column(name = "stack")
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = TechnologyType.class)
     private List<TechnologyType> stack;
 
-    @Column(name = "experience")
+    @ManyToMany
+    @JoinTable(
+            name = "user_profile_experience",
+            joinColumns = @JoinColumn(name = "user_profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "experience_id")
+    )
     private List<Experience> experience;
 
     @NotNull
@@ -67,14 +71,11 @@ public class UserProfile {
     @Pattern(regexp = "MASCULINO|FEMININO|OUTRO", message = "O gênero deve ser 'MASCULINO', 'FEMININO' ou 'OUTRO'")
     private String gender;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     @Pattern(regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}")
     private String phoneNumber;
 
-    @NotNull
-    @NotBlank
-    @Column(name = "languages")
-    @Size(min = 1, message = "A lista de idiomas deve conter pelo menos um idioma")
+    @ElementCollection
     private List<String> languages;
 
 }
