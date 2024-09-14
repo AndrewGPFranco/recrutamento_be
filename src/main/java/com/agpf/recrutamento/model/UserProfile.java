@@ -24,6 +24,10 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @Column(name = "user_id", unique = true)
+    private Long user_id;
+
     @Column(name = "surname", unique = true)
     private String surname;
 
