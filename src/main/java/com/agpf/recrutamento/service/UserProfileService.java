@@ -73,7 +73,7 @@ public class UserProfileService {
 
     public Optional<Profile> getProfileByUser(Long id) {
         Optional<Profile> profileByUser = userProfileRepository.findById(id);
-        if(profileByUser != null)
+        if(profileByUser.isPresent())
             return profileByUser;
 
         throw new RuntimeException("Usuário não encontrado");
