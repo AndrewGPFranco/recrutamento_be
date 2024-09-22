@@ -1,5 +1,6 @@
 package com.agpf.recrutamento.model;
 
+import com.agpf.recrutamento.model.profile.Profile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -36,6 +37,11 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "profile_id", unique = true)
+    private Profile profile;
+
     public User(String login, String password) {
         this.login = login;
         this.password = password;
@@ -45,6 +51,13 @@ public class User implements UserDetails {
         this.login = login;
         this.username = username;
         this.password = password;
+    }
+
+    public User(String login, String username, String password, Profile profile) {
+        this.login = login;
+        this.username = username;
+        this.password = password;
+        this.profile = profile;
     }
 
     @Override
