@@ -9,10 +9,7 @@ import com.agpf.recrutamento.repository.UserProfileRepository;
 import com.agpf.recrutamento.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -78,5 +75,17 @@ public class UserProfileController {
         return profile;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProfileByUser(@RequestParam Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        Optional<Profile> userProfile = null;
 
+        if(userOptional.isPresent())
+            userProfile = repository.findById(userOptional.get().getId());
+
+        if(userProfile != null) {
+            return ResponseEntity.ok().body(userProfile.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

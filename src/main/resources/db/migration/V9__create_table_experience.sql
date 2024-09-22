@@ -1,4 +1,4 @@
-CREATE TABLE experiences (
+CREATE TABLE IF NOT EXISTS experiences (
     id BIGINT NOT NULL AUTO_INCREMENT,
     profile_id BIGINT NOT NULL,
     company_name VARCHAR(255) NOT NULL,

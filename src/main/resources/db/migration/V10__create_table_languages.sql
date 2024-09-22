@@ -1,4 +1,4 @@
-CREATE TABLE profile_languages (
+CREATE TABLE IF NOT EXISTS profile_languages (
     profile_id BIGINT NOT NULL,
     language VARCHAR(255) NOT NULL,
     PRIMARY KEY (profile_id, language),

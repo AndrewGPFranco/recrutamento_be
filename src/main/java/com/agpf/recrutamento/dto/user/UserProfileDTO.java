@@ -1,7 +1,6 @@
 package com.agpf.recrutamento.dto.user;
 
 import com.agpf.recrutamento.enumType.TechnologyType;
-import com.agpf.recrutamento.model.User;
 import com.agpf.recrutamento.model.profile.Experience;
 
 import java.util.Date;
