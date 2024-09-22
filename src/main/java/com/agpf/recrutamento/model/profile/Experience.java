@@ -1,5 +1,6 @@
 package com.agpf.recrutamento.model.profile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,9 +11,9 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "experiences")
 @Table(name = "experiences")
 public class Experience {
 
@@ -21,6 +22,7 @@ public class Experience {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "profile_id")
     private Profile profile;
 

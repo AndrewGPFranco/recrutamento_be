@@ -19,7 +19,7 @@ import java.util.Optional;
 public class UserProfileController {
 
     @Autowired
-    private UserProfileRepository repository;
+    private UserProfileRepository userProfileRepository;
 
     @Autowired
     private ExperienceRepository experienceRepository;
@@ -37,7 +37,7 @@ public class UserProfileController {
             }
 
             Profile profile = getProfile(dto, userOptional);
-            Profile savedProfile = repository.save(profile);
+            Profile savedProfile = userProfileRepository.save(profile);
 
             // Associa as experiências ao perfil criado
             List<Experience> experiences = dto.experience();
@@ -75,17 +75,12 @@ public class UserProfileController {
         return profile;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getProfileByUser(@RequestParam Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        Optional<Profile> userProfile = null;
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getProfileByUser(@PathVariable Long id) {
+        Optional<Profile> profileByUser = userProfileRepository.findById(id);
+        if(profileByUser != null)
+            return ResponseEntity.ok().body(profileByUser);
 
-        if(userOptional.isPresent())
-            userProfile = repository.findById(userOptional.get().getId());
-
-        if(userProfile != null) {
-            return ResponseEntity.ok().body(userProfile.get());
-        }
         return ResponseEntity.notFound().build();
     }
 }

@@ -1,5 +1,6 @@
 package com.agpf.recrutamento.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class User implements UserDetails {
     private String username;
 
     @NotNull
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 

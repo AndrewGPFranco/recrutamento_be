@@ -14,9 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "profiles")
 @Table(name = "profiles")
 public class Profile {
 
