@@ -1,4 +1,4 @@
-package com.agpf.recrutamento.model;
+package com.agpf.recrutamento.model.profile;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,13 +12,17 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "experience")
-@Table(name = "experience")
+@Entity(name = "experiences")
+@Table(name = "experiences")
 public class Experience {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
     @NotNull
     @NotBlank
@@ -31,7 +35,6 @@ public class Experience {
     private String description;
 
     @NotNull
-    @NotBlank
     @Column(name = "start_date")
     private Date startDate;
 
