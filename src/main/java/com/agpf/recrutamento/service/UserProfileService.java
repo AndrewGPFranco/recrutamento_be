@@ -33,6 +33,7 @@ public class UserProfileService {
                 throw new RuntimeException("Usuário não encontrado");
             }
 
+            User user = userOptional.get();
             Profile profile = getProfile(dto, userOptional);
             Profile savedProfile = userProfileRepository.save(profile);
 
@@ -44,6 +45,9 @@ public class UserProfileService {
                 }
                 experienceRepository.saveAll(experiences);
             }
+
+            user.setProfile(savedProfile);
+            userRepository.save(user);
 
             return savedProfile;
         } catch (Exception e) {

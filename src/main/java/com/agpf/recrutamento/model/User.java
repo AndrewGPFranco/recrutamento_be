@@ -38,6 +38,7 @@ public class User implements UserDetails {
     private String password;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "profile_id", unique = true)
     private Profile profile;
 
