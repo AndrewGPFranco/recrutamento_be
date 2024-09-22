@@ -7,7 +7,9 @@ import com.agpf.recrutamento.model.profile.Profile;
 import com.agpf.recrutamento.repository.ExperienceRepository;
 import com.agpf.recrutamento.repository.UserProfileRepository;
 import com.agpf.recrutamento.repository.UserRepository;
+import com.agpf.recrutamento.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,68 +21,25 @@ import java.util.Optional;
 public class UserProfileController {
 
     @Autowired
-    private UserProfileRepository userProfileRepository;
-
-    @Autowired
-    private ExperienceRepository experienceRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private UserProfileService userProfileService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createProfile(@RequestBody UserProfileDTO dto) {
         try {
-            Optional<User> userOptional = userRepository.findById(dto.userId());
-
-            if (userOptional.isEmpty()) {
-                return ResponseEntity.badRequest().body("Usuário não encontrado");
-            }
-
-            Profile profile = getProfile(dto, userOptional);
-            Profile savedProfile = userProfileRepository.save(profile);
-
-            // Associa as experiências ao perfil criado
-            List<Experience> experiences = dto.experience();
-            if (experiences != null) {
-                for (Experience experience : experiences) {
-                    experience.setProfile(savedProfile);
-                }
-                experienceRepository.saveAll(experiences);
-            }
-
-            return ResponseEntity.ok().body(savedProfile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("Erro ao criar perfil para o usuário");
+            Profile profile = userProfileService.createProfile(dto);
+            return ResponseEntity.ok().body(profile);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
-
-    private Profile getProfile(UserProfileDTO dto, Optional<User> userOptional) {
-        User user = userOptional.get();
-
-        Profile profile = new Profile(
-                user,
-                dto.nickname(),
-                dto.fullName(),
-                dto.description(),
-                dto.dateOfBirth(),
-                dto.stack(),
-                null,
-                dto.country(),
-                dto.city(),
-                dto.gender(),
-                dto.phoneNumber(),
-                dto.languages()
-        );
-        return profile;
     }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<?> getProfileByUser(@PathVariable Long id) {
-        Optional<Profile> profileByUser = userProfileRepository.findById(id);
-        if(profileByUser != null)
+        try {
+            Optional<Profile> profileByUser = userProfileService.getProfileByUser(id);
             return ResponseEntity.ok().body(profileByUser);
-
-        return ResponseEntity.notFound().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
